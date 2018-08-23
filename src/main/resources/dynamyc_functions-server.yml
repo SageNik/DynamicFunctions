@@ -1,0 +1,42 @@
+# Configure this Discovery Server
+eureka:
+  instance:
+    hostname: localhost
+  client:  # Not a client, don't register with yourself (unless running
+           # multiple discovery servers for redundancy)
+    registerWithEureka: false
+    fetchRegistry: false
+
+# Spring properties
+spring:
+  profiles: dev
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    platform: postgresql
+    url: jdbc:postgresql://localhost:5432/my_postgres
+    username: postgres
+    password: 123
+    driverClassName: org.postgresql.Driver
+  application:
+     name: dynamic_functions-server  # Service registers under this name
+  freemarker:
+    enabled: false           # Ignore Eureka dashboard FreeMarker templates
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: info
+
+# Server configuration
+server:
+  port: 8080
+  sessionTimeout: 30
