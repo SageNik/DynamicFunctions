@@ -1,6 +1,5 @@
 package com.chisw.dynamicFunctions.web.controller;
 
-import com.chisw.dynamicFunctions.DynamicFunctionsServer;
 import com.chisw.dynamicFunctions.service.DynamicFunctionsService;
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import org.springframework.beans.factory.annotation.Autowired;

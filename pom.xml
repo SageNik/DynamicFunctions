@@ -8,16 +8,17 @@
     <artifactId>com.chisw.dynamicFunctions</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>1.5.3.RELEASE</version>-->
-    <!--</parent>-->
     <parent>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-parent</artifactId>
-        <version>Camden.SR7</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
     </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -37,21 +38,12 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <dependency>
-            <!-- Spring Cloud starter -->
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <!-- Eureka for service registration -->
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
-        </dependency>
         <!--DB-->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>9.4-1206-jdbc42</version>
+        <scope>runtime</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -62,25 +54,25 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Tests -->
-        <dependency>
-            <!-- Testing starter -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test-autoconfigure</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Enables to run embedded postgresql, is used for tests in the project -->
-        <!-- https://mvnrepository.com/artifact/ru.yandex.qatools.embed/postgresql-embedded -->
-        <dependency>
-            <groupId>ru.yandex.qatools.embed</groupId>
-            <artifactId>postgresql-embedded</artifactId>
-            <version>2.6</version>
-            <scope>test</scope>
-        </dependency>
+        <!--&lt;!&ndash; Tests &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--&lt;!&ndash; Testing starter &ndash;&gt;-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-test</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-test-autoconfigure</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; Enables to run embedded postgresql, is used for tests in the project &ndash;&gt;-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/ru.yandex.qatools.embed/postgresql-embedded &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>ru.yandex.qatools.embed</groupId>-->
+            <!--<artifactId>postgresql-embedded</artifactId>-->
+            <!--<version>2.6</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
@@ -88,19 +80,6 @@
         </dependency>
     </dependencies>
 
-
-     <!--Spring Cloud dependencies-->
-    <!--<dependencyManagement>-->
-        <!--<dependencies>-->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.cloud</groupId>-->
-                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-                <!--<version>Finchley.RELEASE</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-        <!--</dependencies>-->
-    <!--</dependencyManagement>-->
     <build>
         <plugins>
             <plugin>

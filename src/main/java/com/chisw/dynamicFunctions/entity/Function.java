@@ -12,8 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "function")
 @Data
-@Inheritance (
-        strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance (strategy=InheritanceType.SINGLE_TABLE)
 public abstract class Function implements Serializable{
 
     private static final long serialVersionUID = 1L;
