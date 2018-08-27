@@ -4,26 +4,25 @@ import com.chisw.dynamicFunctions.entity.Function;
 import com.chisw.dynamicFunctions.exception.FunctionNotFoundException;
 import com.chisw.dynamicFunctions.entity.function.Container;
 import com.chisw.dynamicFunctions.entity.function.PrimitiveFunction;
-import com.chisw.dynamicFunctions.persistence.jpa.repository.ContainerRepository;
 import com.chisw.dynamicFunctions.persistence.jpa.repository.FunctionRepository;
+import com.chisw.dynamicFunctions.util.FunctionWebResourceUtil;
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import com.chisw.dynamicFunctions.web.dto.ContainerDTO;
+import com.chisw.dynamicFunctions.web.dto.FunctionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@Profile("dev")
 public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
 
     @Autowired
     private FunctionRepository functionRepository;
-    @Autowired
-    private ContainerRepository containerRepository;
 
     @Override
     public boolean initConfig(ConfigDTO configDTO) {
@@ -32,7 +31,7 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
             createPrimitiveFunctions(configDTO.getPrimitives(), null);
             for(ContainerDTO containerDTO : configDTO.getContainers()){
                 Container container = new Container(containerDTO.getName());
-                containerRepository.save(container);
+                functionRepository.save(container);
                 createPrimitiveFunctions(containerDTO.getFunctions(), container);
             }
             return true;
@@ -41,8 +40,31 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
     }
 
     @Override
-    public List<Object> getAvailableFunctions() {
-        return null;
+    public List<FunctionDTO> getAvailableFunctions() {
+        List<FunctionDTO> functionDTOList = new ArrayList<>();
+            List<Function> functions = functionRepository.findAllByAvailableAndContainerId(true, null);
+            functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toDTO).collect(Collectors.toList()));
+        return functionDTOList;
+    }
+
+    @Override
+    public boolean connectFunction(String functionName, Float a, Float b) {
+         Function function = functionRepository.findByNameAndAvailableAndContainerIdAndSwitchedOn(functionName, true,null, false);
+        if(function == null) return false;
+        else {
+            function.switchOn(a,b);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean disconnectFunction(String functionName) {
+        Function function = functionRepository.findByNameAndAvailableAndContainerIdAndSwitchedOn(functionName, true,null, true);
+        if(function == null) return false;
+        else {
+            function.switchOff();
+        return true;
+        }
     }
 
     private void createPrimitiveFunctions(List<String> functionNames, Container container) {

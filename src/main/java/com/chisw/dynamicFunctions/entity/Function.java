@@ -29,19 +29,19 @@ public abstract class Function implements Serializable{
     /**
      * Arguments of function
      */
-    protected float a,b,x;
+    protected Float a,b,x;
     /**
      * It's field define can be used current function for calculation (available = true) or not (available = false)
      */
-    protected boolean available;
+    protected Boolean available;
     /**
      * It's field define have the current function defined arguments and ready to use (available = true) or not (available = false)
      */
-    protected boolean switchedOn;
+    protected Boolean switchedOn;
     /**
      * It's field define this instance is container and might have list of primitive functions (container = true) or not (container = false)
      */
-    protected boolean asContainer;
+    protected Boolean asContainer;
     /**
      * It's field define container if this instance is primitive function and belong this container
      */
@@ -59,19 +59,23 @@ public abstract class Function implements Serializable{
         this.available = true;
     }
 
+    public Function() {
+
+    }
+
     /**
      * This method for evaluating mathematical expression with argument x
      * @param x argument
      * @return float number as result of evaluation
      */
-     public abstract float evaluate(float x);
+     public abstract Float evaluate(Float x);
 
     /**
      * This method switched on current function to evaluations and set params a and b. Set flag switchedOn = true
      * @param a parameter for evaluation
      * @param b parameter for evaluation
      */
-    public abstract void switchOn(float a, float b);
+    public abstract void switchOn(Float a, Float b);
 
     /**
      * This method switched off current function from evaluations and set params a and b as 0. Set flag switchedOn = false

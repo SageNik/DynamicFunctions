@@ -1,8 +1,14 @@
 package com.chisw.dynamicFunctions.entity.function;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+
 /**
  * This class is used for calculation Sin(a,b,x) function
  */
+@Entity
+@Data
 public class Sin extends PrimitiveFunction {
 
     /**
@@ -11,12 +17,12 @@ public class Sin extends PrimitiveFunction {
     public Sin(String name) {
         super(name);
     }
-
+    public Sin(){ super();}
     /**
      *{@inheritDoc}
      */
     @Override
-    public float evaluate(float x) {
+    public Float evaluate(Float x) {
         return (float)(a*Math.sin(x+b));
     }
 }

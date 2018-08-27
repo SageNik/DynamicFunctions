@@ -2,14 +2,16 @@ package com.chisw.dynamicFunctions;
 
 import com.chisw.dynamicFunctions.configuration.AppConfiguration;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 /**
  * Run as a micro-service, registering with the Discovery Server (Eureka)
  * if needed
  */
-@SpringBootApplication
+@EnableAutoConfiguration
 @Import(AppConfiguration.class)
 public class DynamicFunctionsServer {
 

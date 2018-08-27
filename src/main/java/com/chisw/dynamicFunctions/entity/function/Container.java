@@ -1,13 +1,18 @@
 package com.chisw.dynamicFunctions.entity.function;
 
 import com.chisw.dynamicFunctions.entity.Function;
+import lombok.Data;
+
+import javax.persistence.Entity;
 
 /**
  * Persistent Container entity with JPA markup.
  */
+@Entity
+@Data
 public class Container extends Function {
 
-
+    public Container(){super();}
     public Container(String name) {
         super(name);
         this.asContainer = true;
@@ -17,18 +22,18 @@ public class Container extends Function {
      * {@inheritDoc}
      */
     @Override
-    public float evaluate(float x) {
+    public Float evaluate(Float x) {
         for(Function function : functions){
             function.evaluate(x);
         }
-        return 0;
+        return x;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void switchOn(float a, float b) {
+    public void switchOn(Float a, Float b) {
         this.switchedOn = true;
         this.a = a;
         this.b = b;
@@ -43,8 +48,8 @@ public class Container extends Function {
     @Override
     public void switchOff() {
         this.switchedOn = false;
-        this.a = 0;
-        this.b = 0;
+        this.a = null;
+        this.b = null;
         for(Function function : functions){
             function.switchOff();
         }

@@ -11,6 +11,9 @@ public abstract class PrimitiveFunction extends Function {
     public PrimitiveFunction(String name) {
         super(name);
     }
+    public PrimitiveFunction (){
+        super();
+    }
 
     public static PrimitiveFunction getFunction(String functionName) throws FunctionNotFoundException{
 
@@ -28,7 +31,7 @@ public abstract class PrimitiveFunction extends Function {
      * {@inheritDoc}
      */
     @Override
-    public void switchOn(float a, float b) {
+    public void switchOn(Float a, Float b) {
         this.setA(a);
         this.setB(b);
         this.setSwitchedOn(true);
@@ -39,8 +42,8 @@ public abstract class PrimitiveFunction extends Function {
      */
     @Override
     public void switchOff() {
-        this.setA(0);
-        this.setB(0);
+        this.setA(null);
+        this.setB(null);
         this.setSwitchedOn(false);
     }
 
