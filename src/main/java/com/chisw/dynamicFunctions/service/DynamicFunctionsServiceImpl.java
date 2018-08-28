@@ -49,7 +49,7 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
 
     @Override
     public boolean connectFunction(String functionName, Float a, Float b) {
-         Function function = functionRepository.findByNameAndAvailableAndContainerIdAndSwitchedOn(functionName, true,null, false);
+         Function function = functionRepository.findFirstByNameAndSwitchedOnAndContainerId(functionName, false, null);
         if(function == null) return false;
         else {
             function.switchOn(a,b);
@@ -59,12 +59,20 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
 
     @Override
     public boolean disconnectFunction(String functionName) {
-        Function function = functionRepository.findByNameAndAvailableAndContainerIdAndSwitchedOn(functionName, true,null, true);
+        Function function = functionRepository.findFirstByNameAndSwitchedOnAndContainerId(functionName, true, null);
         if(function == null) return false;
         else {
             function.switchOff();
         return true;
         }
+    }
+
+    @Override
+    public List<FunctionDTO> getConfig() {
+        List<FunctionDTO> functionDTOList = new ArrayList<>();
+        List<Function> functions = functionRepository.findAllByAvailableAndSwitchedOnAndContainerId(true, true, null);
+        functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toDTO).collect(Collectors.toList()));
+        return functionDTOList;
     }
 
     private void createPrimitiveFunctions(List<String> functionNames, Container container) {

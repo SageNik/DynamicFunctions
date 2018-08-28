@@ -8,4 +8,6 @@ import lombok.Data;
 public class FunctionDTO {
 
     private String name;
+    private Float a;
+    private Float b;
 }

@@ -41,20 +41,21 @@ public class DynamicFunctionsController {
         if(functionName == null || a == null || b == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
-            if(service.connectFunction(functionName, Float.valueOf(a), Float.valueOf(b)))return new ResponseEntity<>("The function with name: "+functionName+ " has been successfully connected",HttpStatus.OK);
-            else return new ResponseEntity<>("Sorry, the function with name: "+functionName+ " hasn't been found",HttpStatus.OK);
+            if(service.connectFunction(functionName, Float.valueOf(a), Float.valueOf(b)))return new ResponseEntity<>("The function with name: [ "+functionName+ " ] has been successfully connected",HttpStatus.OK);
+            else return new ResponseEntity<>("Sorry, the available function with name: [ "+functionName+ " ] hasn't been found",HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "disconnect", method = RequestMethod.POST)
     public ResponseEntity disconnect(@RequestParam("name")String functionName){
-        if(service.disconnectFunction(functionName))return new ResponseEntity<>("The function with name: "+functionName+ " has been successfully disconnected",HttpStatus.OK);
-        else return new ResponseEntity<>("Sorry, the function with name: "+functionName+ " hasn't been found",HttpStatus.OK);
+        if(service.disconnectFunction(functionName))return new ResponseEntity<>("The function with name: [ "+functionName+ " ] has been successfully disconnected",HttpStatus.OK);
+        else return new ResponseEntity<>("Sorry, the available function with name: [ "+functionName+ " ] hasn't been found",HttpStatus.OK);
     }
 
-    @RequestMapping(value = "getConfig")
+    @RequestMapping(value = "getConfig", method = RequestMethod.GET)
     public ResponseEntity getConfig(){
-        return  null;
+        List<FunctionDTO> functions = service.getConfig();
+        return new ResponseEntity<>(functions, HttpStatus.OK);
     }
 
     @RequestMapping(value = "eval")

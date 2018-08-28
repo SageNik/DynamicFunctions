@@ -33,20 +33,20 @@ public abstract class Function implements Serializable{
     /**
      * It's field define can be used current function for calculation (available = true) or not (available = false)
      */
-    protected Boolean available;
+    protected boolean available;
     /**
      * It's field define have the current function defined arguments and ready to use (available = true) or not (available = false)
      */
-    protected Boolean switchedOn;
+    protected boolean switchedOn;
     /**
      * It's field define this instance is container and might have list of primitive functions (container = true) or not (container = false)
      */
-    protected Boolean asContainer;
+    protected boolean asContainer;
     /**
      * It's field define container if this instance is primitive function and belong this container
      */
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn
     protected Function container;
     /**
      * List of primitive functions

@@ -38,4 +38,10 @@ public interface DynamicFunctionsService {
      * @return "true" if function disconnected successful or "false" if not.
      */
     boolean disconnectFunction(String functionName);
+
+    /**
+     * This method get all available and switched on functions
+     * @return List of found functions and containers
+     */
+    List<FunctionDTO> getConfig();
 }

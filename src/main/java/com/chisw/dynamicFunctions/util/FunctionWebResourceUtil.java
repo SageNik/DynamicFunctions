@@ -10,6 +10,8 @@ public class FunctionWebResourceUtil {
 
         FunctionDTO functionDTO= new FunctionDTO();
         functionDTO.setName(function.getName());
+        functionDTO.setA(function.getA());
+        functionDTO.setB(function.getB());
         return functionDTO;
     }
 }
