@@ -1,5 +1,6 @@
 package com.chisw.dynamicFunctions.entity.function;
 
+import com.chisw.dynamicFunctions.entity.Calculation;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -23,8 +24,9 @@ public class Cos extends PrimitiveFunction {
      *{@inheritDoc}
      */
     @Override
-    public Float evaluate(Float x) {
+    public Calculation evaluate(Float x, String userName) {
 
-        return (float) (a * Math.cos(x + b));
+        Float result = (float)(a * Math.cos(x + b));
+        return new Calculation(this.getName(), userName, result, x);
     }
 }

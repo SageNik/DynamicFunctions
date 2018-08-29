@@ -1,9 +1,12 @@
 package com.chisw.dynamicFunctions.entity.function;
 
+import com.chisw.dynamicFunctions.entity.Calculation;
 import com.chisw.dynamicFunctions.entity.Function;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Persistent Container entity with JPA markup.
@@ -22,11 +25,13 @@ public class Container extends Function {
      * {@inheritDoc}
      */
     @Override
-    public Float evaluate(Float x) {
+    public Calculation evaluate(Float x, String userName) {
+        this.calculations = new ArrayList<>();
         for(Function function : functions){
-            function.evaluate(x);
+            Calculation calc = function.evaluate(x, userName);
+            this.getCalculations().add(calc);
         }
-        return x;
+        return new Calculation(this.getName(),userName,null,x);
     }
 
     /**

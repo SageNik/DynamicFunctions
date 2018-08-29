@@ -48,11 +48,18 @@ public abstract class Function implements Serializable{
     @ManyToOne
     @JoinColumn
     protected Function container;
+
     /**
      * List of primitive functions
      */
     @OneToMany(mappedBy = "container",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected List<Function> functions;
+
+    /**
+     * List of calculations of function or functions (if it's a container)
+     */
+    @OneToMany(mappedBy = "function",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    protected List<Calculation> calculations;
 
     public Function(String name) {
         this.name = name;
@@ -66,9 +73,10 @@ public abstract class Function implements Serializable{
     /**
      * This method for evaluating mathematical expression with argument x
      * @param x argument
-     * @return float number as result of evaluation
+     * @param userName name of user evaluating this function
+     * @return Calculation instance as result of evaluation
      */
-     public abstract Float evaluate(Float x);
+     public abstract Calculation evaluate(Float x, String userName);
 
     /**
      * This method switched on current function to evaluations and set params a and b. Set flag switchedOn = true
