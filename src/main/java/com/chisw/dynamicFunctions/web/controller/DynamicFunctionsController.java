@@ -58,9 +58,11 @@ public class DynamicFunctionsController {
         return new ResponseEntity<>(functions, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "eval")
-    public ResponseEntity evaluate(){
-        return  null;
+    @RequestMapping(value = "eval", method = RequestMethod.POST)
+    public ResponseEntity evaluate(@RequestParam("user")String userName, @RequestParam("x")Float x){
+        if(userName == null || x == null) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+     if(service.evaluateFunctions(userName, x)) return new ResponseEntity<>("All available functions was successfully evaluated", HttpStatus.OK);
+     else return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "getUsage")

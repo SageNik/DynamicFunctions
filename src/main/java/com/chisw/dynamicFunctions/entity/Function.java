@@ -55,12 +55,6 @@ public abstract class Function implements Serializable{
     @OneToMany(mappedBy = "container",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected List<Function> functions;
 
-    /**
-     * List of calculations of function or functions (if it's a container)
-     */
-    @OneToMany(mappedBy = "function",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected List<Calculation> calculations;
-
     public Function(String name) {
         this.name = name;
         this.available = true;
@@ -74,9 +68,9 @@ public abstract class Function implements Serializable{
      * This method for evaluating mathematical expression with argument x
      * @param x argument
      * @param userName name of user evaluating this function
-     * @return Calculation instance as result of evaluation
+     * @return List of Calculation instances as result of evaluation function or functions if it's a container
      */
-     public abstract Calculation evaluate(Float x, String userName);
+     public abstract List<Calculation> evaluate(Float x, String userName);
 
     /**
      * This method switched on current function to evaluations and set params a and b. Set flag switchedOn = true

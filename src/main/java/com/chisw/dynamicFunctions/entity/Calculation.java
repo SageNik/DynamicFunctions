@@ -20,10 +20,9 @@ public class Calculation implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "calculation_id_seq")
     @Column(name = "id")
     private Long id;
-    @Column(name = "function")
-    @ManyToOne
-    @JoinColumn
-    private String function;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "function_id", nullable = false)
+    private Function function;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "result")
@@ -31,7 +30,7 @@ public class Calculation implements Serializable{
     @Column(name = "x")
     private Float x;
 
-    public Calculation(String function, String userName, Float result, Float x) {
+    public Calculation(Function function, String userName, Float result, Float x) {
         this.function = function;
         this.userName = userName;
         this.result = result;

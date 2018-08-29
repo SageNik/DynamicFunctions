@@ -25,13 +25,12 @@ public class Container extends Function {
      * {@inheritDoc}
      */
     @Override
-    public Calculation evaluate(Float x, String userName) {
-        this.calculations = new ArrayList<>();
+    public List<Calculation> evaluate(Float x, String userName) {
+        List<Calculation> calculations = new ArrayList<>();
         for(Function function : functions){
-            Calculation calc = function.evaluate(x, userName);
-            this.getCalculations().add(calc);
+            calculations.addAll(function.evaluate(x, userName));
         }
-        return new Calculation(this.getName(),userName,null,x);
+        return calculations;
     }
 
     /**

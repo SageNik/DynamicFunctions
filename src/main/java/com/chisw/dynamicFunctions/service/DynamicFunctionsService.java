@@ -44,4 +44,12 @@ public interface DynamicFunctionsService {
      * @return List of found functions and containers
      */
     List<FunctionDTO> getConfig();
+
+    /**
+     * This method starts evaluate in all available and switched on functions and save the results to database
+     * @param userName name of user for who do this evaluations
+     * @param x arguments for evaluation
+     * @return "true" if evaluation done successful or "false" if not.
+     */
+    boolean evaluateFunctions(String userName, Float x);
 }

@@ -1,14 +1,17 @@
 package com.chisw.dynamicFunctions.service;
 
+import com.chisw.dynamicFunctions.entity.Calculation;
 import com.chisw.dynamicFunctions.entity.Function;
 import com.chisw.dynamicFunctions.exception.FunctionNotFoundException;
 import com.chisw.dynamicFunctions.entity.function.Container;
 import com.chisw.dynamicFunctions.entity.function.PrimitiveFunction;
+import com.chisw.dynamicFunctions.persistence.jpa.repository.CalculationRepository;
 import com.chisw.dynamicFunctions.persistence.jpa.repository.FunctionRepository;
 import com.chisw.dynamicFunctions.util.FunctionWebResourceUtil;
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import com.chisw.dynamicFunctions.web.dto.ContainerDTO;
 import com.chisw.dynamicFunctions.web.dto.FunctionDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,8 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
 
     @Autowired
     private FunctionRepository functionRepository;
+    @Autowired
+    private CalculationRepository calculationRepository;
 
     @Override
     public boolean initConfig(ConfigDTO configDTO) {
@@ -73,6 +78,16 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
         List<Function> functions = functionRepository.findAllByAvailableAndSwitchedOnAndContainerId(true, true, null);
         functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toDTO).collect(Collectors.toList()));
         return functionDTOList;
+    }
+
+    @Override
+    public boolean evaluateFunctions(String userName, Float x) {
+        List<Function> switchedOnFunctions = functionRepository.findAllByAvailableAndSwitchedOnAndContainerId(true, true, null);
+        for(Function function : switchedOnFunctions){
+            List<Calculation> calculations = function.evaluate(x, userName);
+           if(calculationRepository.save(calculations).isEmpty()) return false;
+        }
+        return true;
     }
 
     private void createPrimitiveFunctions(List<String> functionNames, Container container) {

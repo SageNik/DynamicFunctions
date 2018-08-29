@@ -4,6 +4,8 @@ import com.chisw.dynamicFunctions.entity.Calculation;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is used for calculation Const(a,b,x) function
@@ -24,8 +26,10 @@ public class Const extends PrimitiveFunction {
      * {@inheritDoc}
      */
     @Override
-    public Calculation evaluate(Float x, String userName) {
+    public List<Calculation> evaluate(Float x, String userName) {
+        List<Calculation> calculations = new ArrayList<>();
         Float result = (a + b);
-        return new Calculation(this.getName(), userName, result, x);
+        calculations.add(new Calculation(this, userName, result, x));
+        return calculations;
     }
 }
