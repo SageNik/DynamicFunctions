@@ -1,4 +1,4 @@
-package com.chisw.dynamicFunctions.service;
+package com.chisw.dynamicFunctions.service.impl;
 
 import com.chisw.dynamicFunctions.entity.Calculation;
 import com.chisw.dynamicFunctions.entity.Function;
@@ -7,11 +7,11 @@ import com.chisw.dynamicFunctions.entity.function.Container;
 import com.chisw.dynamicFunctions.entity.function.PrimitiveFunction;
 import com.chisw.dynamicFunctions.persistence.jpa.repository.CalculationRepository;
 import com.chisw.dynamicFunctions.persistence.jpa.repository.FunctionRepository;
+import com.chisw.dynamicFunctions.service.interfaces.DynamicFunctionsService;
 import com.chisw.dynamicFunctions.util.FunctionWebResourceUtil;
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import com.chisw.dynamicFunctions.web.dto.ContainerDTO;
 import com.chisw.dynamicFunctions.web.dto.FunctionDTO;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *{@inheritDoc}
+ */
 @Service
 @Transactional
 public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
 
+    private final FunctionRepository functionRepository;
+    private final CalculationRepository calculationRepository;
+
     @Autowired
-    private FunctionRepository functionRepository;
-    @Autowired
-    private CalculationRepository calculationRepository;
+    public DynamicFunctionsServiceImpl(FunctionRepository functionRepository, CalculationRepository calculationRepository) {
+        this.functionRepository = functionRepository;
+        this.calculationRepository = calculationRepository;
+    }
 
     @Override
     public boolean initConfig(ConfigDTO configDTO) {
@@ -48,7 +55,7 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
     public List<FunctionDTO> getAvailableFunctions() {
         List<FunctionDTO> functionDTOList = new ArrayList<>();
             List<Function> functions = functionRepository.findAllByAvailableAndContainerId(true, null);
-            functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toDTO).collect(Collectors.toList()));
+            functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toFunctionDTO).collect(Collectors.toList()));
         return functionDTOList;
     }
 
@@ -76,7 +83,7 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
     public List<FunctionDTO> getConfig() {
         List<FunctionDTO> functionDTOList = new ArrayList<>();
         List<Function> functions = functionRepository.findAllByAvailableAndSwitchedOnAndContainerId(true, true, null);
-        functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toDTO).collect(Collectors.toList()));
+        functionDTOList.addAll(functions.stream().map(FunctionWebResourceUtil::toFunctionDTO).collect(Collectors.toList()));
         return functionDTOList;
     }
 

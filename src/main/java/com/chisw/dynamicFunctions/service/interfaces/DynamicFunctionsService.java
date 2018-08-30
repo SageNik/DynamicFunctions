@@ -1,4 +1,4 @@
-package com.chisw.dynamicFunctions.service;
+package com.chisw.dynamicFunctions.service.interfaces;
 
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import com.chisw.dynamicFunctions.web.dto.FunctionDTO;

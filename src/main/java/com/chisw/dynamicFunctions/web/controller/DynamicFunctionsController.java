@@ -1,8 +1,11 @@
 package com.chisw.dynamicFunctions.web.controller;
 
-import com.chisw.dynamicFunctions.service.DynamicFunctionsService;
+import com.chisw.dynamicFunctions.service.interfaces.CalculationService;
+import com.chisw.dynamicFunctions.service.interfaces.DynamicFunctionsService;
+import com.chisw.dynamicFunctions.web.dto.CalculationDTO;
 import com.chisw.dynamicFunctions.web.dto.ConfigDTO;
 import com.chisw.dynamicFunctions.web.dto.FunctionDTO;
+import com.chisw.dynamicFunctions.web.dto.UsageBodyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +20,13 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class DynamicFunctionsController {
 
-    private DynamicFunctionsService service;
+    private final DynamicFunctionsService service;
+    private final CalculationService calculationService;
 
     @Autowired
-    public DynamicFunctionsController(DynamicFunctionsService service) {
+    public DynamicFunctionsController(DynamicFunctionsService service, CalculationService calculationService) {
         this.service = service;
+        this.calculationService = calculationService;
     }
 
     @RequestMapping(value = "initialConfig",method = RequestMethod.POST)
@@ -66,8 +71,9 @@ public class DynamicFunctionsController {
     }
 
     @RequestMapping(value = "getUsage")
-    public ResponseEntity getUsage(){
-        return  null;
+    public ResponseEntity getUsage(@RequestBody UsageBodyDTO dto){
+        List<CalculationDTO> calculations = calculationService.getUsage(dto);
+        return  new ResponseEntity<>(calculations, HttpStatus.OK);
     }
 
     @RequestMapping(value = "getDisconnected")
