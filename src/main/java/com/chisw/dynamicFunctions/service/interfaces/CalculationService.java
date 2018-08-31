@@ -16,4 +16,11 @@ public interface CalculationService {
      * @return list of found CalculationDTO as a result
      */
     List<CalculationDTO> getUsage(UsageBodyDTO dto);
+
+    /**
+     * This method get user name who was evaluated max times current function according parameters x1 <= x <= x2
+     * @param dto consists required request data
+     * @return name of user as a result
+     */
+    String getMaxUser(UsageBodyDTO dto);
 }

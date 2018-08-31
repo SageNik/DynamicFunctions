@@ -52,4 +52,11 @@ public interface DynamicFunctionsService {
      * @return "true" if evaluation done successful or "false" if not.
      */
     boolean evaluateFunctions(String userName, Float x);
+
+    /**
+     * This method get all available and switched off primitive functions which are like a primitive functions in any
+     * available and switched on container and which are was used at least one's times
+     * @return List of found functions
+     */
+    List<FunctionDTO> getDisconnected();
 }

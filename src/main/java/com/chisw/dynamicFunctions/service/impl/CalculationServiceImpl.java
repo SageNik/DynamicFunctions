@@ -37,4 +37,11 @@ public class CalculationServiceImpl implements CalculationService {
         }
         return calculations;
     }
+
+    @Override
+    public String getMaxUser(UsageBodyDTO dto) {
+       Calculation calc = calculationRepository.findFunctionMaxUser(dto.getFunc());
+       if(calc != null) return calc.getUserName();
+       return null;
+    }
 }

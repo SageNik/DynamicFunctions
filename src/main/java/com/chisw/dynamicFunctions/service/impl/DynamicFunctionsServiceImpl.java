@@ -97,6 +97,20 @@ public class DynamicFunctionsServiceImpl implements DynamicFunctionsService {
         return true;
     }
 
+    @Override
+    public List<FunctionDTO> getDisconnected() {
+        List<FunctionDTO> functionDTOList = new ArrayList<>();
+        List<Function> functions = functionRepository.findAllByAvailableAndSwitchedOn(true, false);
+        if(functions != null){
+            List<Function> primitiveFunc = functions.stream().filter(it -> it.getContainer() == null).collect(Collectors.toList());
+            for(Function func :primitiveFunc){
+                Calculation calc = calculationRepository.findOneByDisconnect(func.getName());
+                if(calc != null) functionDTOList.add(FunctionWebResourceUtil.toFunctionDTO(func));
+            }
+        }
+        return functionDTOList;
+    }
+
     private void createPrimitiveFunctions(List<String> functionNames, Container container) {
         for(String functionName :functionNames){
             saveFunction(functionName, container);

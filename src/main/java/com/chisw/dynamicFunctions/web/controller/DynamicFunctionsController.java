@@ -76,13 +76,16 @@ public class DynamicFunctionsController {
         return  new ResponseEntity<>(calculations, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "getDisconnected")
+    @RequestMapping(value = "getDisconnected", method = RequestMethod.GET)
     public ResponseEntity getDisconnected(){
-        return  null;
+        List<FunctionDTO> functions = service.getDisconnected();
+        return new ResponseEntity<>(functions, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "getMaxUser")
-    public ResponseEntity getMaxUser(){
-        return  null;
+    @RequestMapping(value = "getMaxUser", method = RequestMethod.GET)
+    public ResponseEntity getMaxUser(UsageBodyDTO dto){
+        String maxUser = calculationService.getMaxUser(dto);
+        if (maxUser != null) return new ResponseEntity<>(maxUser, HttpStatus.OK);
+        else return new ResponseEntity<>("Sorry any user not found", HttpStatus.OK);
     }
 }

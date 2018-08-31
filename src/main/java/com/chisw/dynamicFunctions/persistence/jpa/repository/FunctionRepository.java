@@ -17,4 +17,6 @@ public interface FunctionRepository extends JpaRepository<Function,Long>{
     Function findFirstByNameAndSwitchedOnAndContainerId(String functionName, boolean switchedOn, Long containerId);
 
     List<Function> findAllByAvailableAndSwitchedOnAndContainerId(boolean available, boolean switchedOn, Long containerId);
+
+    List<Function> findAllByAvailableAndSwitchedOn(boolean available, boolean switchedOn);
 }
