@@ -5,8 +5,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class UsageBodyDTO {
-   private String user;
-   private Float x1;
-   private Float x2;
-   private String func;
+   public String user;
+   public String func;
+   public Float x1;
+   public Float x2;
 }

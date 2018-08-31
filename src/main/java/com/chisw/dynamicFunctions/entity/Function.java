@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "function")
 @Data
-@Inheritance (strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance (strategy=InheritanceType.JOINED)
 public abstract class Function implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public abstract class Function implements Serializable{
     /**
      * Arguments of function
      */
-    protected Float a,b,x;
+    protected Float a,b;
     /**
      * It's field define can be used current function for calculation (available = true) or not (available = false)
      */

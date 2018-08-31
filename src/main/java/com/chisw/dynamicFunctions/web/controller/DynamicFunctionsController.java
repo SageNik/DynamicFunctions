@@ -70,8 +70,8 @@ public class DynamicFunctionsController {
      else return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @RequestMapping(value = "getUsage")
-    public ResponseEntity getUsage(@RequestBody UsageBodyDTO dto){
+    @RequestMapping(value = "getUsage", method = RequestMethod.GET)
+    public ResponseEntity getUsage(UsageBodyDTO dto){
         List<CalculationDTO> calculations = calculationService.getUsage(dto);
         return  new ResponseEntity<>(calculations, HttpStatus.OK);
     }
